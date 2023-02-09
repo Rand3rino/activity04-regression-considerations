@@ -6,3 +6,45 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Libraries
+```{r libraries, message=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(GGally)
+```
+
+
+## Load Data
+```{r loaddata, message=FALSE}
+evals <- readr::read_tsv("https://www.openintro.org/data/tab-delimited/evals.txt")
+```
+### The Data
+```{r plot score}
+evals %>% 
+  ggplot(aes(x=score)) + 
+  geom_histogram(bins = 24) + 
+  theme_bw()
+```
+
+The distribution of score appears to be left skewed.
+
+```{r plot 2 other variables}
+evals %>% 
+  ggplot(aes(x=age,y=bty_avg)) + 
+  geom_point() + 
+  theme_bw()
+```
+
+There does not appear to be a strong relation between `bty_avg` and `age`. There may be a weak negative relationship.
+
+## Pairwise Relationships
+```{r pairwise}
+evals %>% 
+  select(starts_with("bty_")) %>% 
+  ggpairs() +
+  theme_bw()
+```
+The relationship between all of these variables appear to be positive. `bty_m1low` seems to have the weakest correlations with the 3 variables starting with `bty_f`. It does not make sense to include all of these beauty variables in our model.
+
+
