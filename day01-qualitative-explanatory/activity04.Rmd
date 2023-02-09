@@ -64,3 +64,42 @@ m_bty_rank <- lm(score ~ bty_avg + rank, data = evals)
 tidy(m_bty_rank)
 ```
 
+## Day 2 - Interaction Terms and Other Considerations
+
+### bty_avg x gender interaction
+```{r interaction}
+m_int <- lm(score ~ bty_avg * gender, data = evals)
+tidy(m_int)
+```
+
+`bty_avg:gendermale` means that this variable is the interaction between `bty_avg` and if the professor was male.
+
+The interaction equation would be 
+`score` = 3.95 + (0.031 + 0.079 * `gendermale`) * `bty_avg` - 0.184 `gendermale`
+or for male professors
+`score` = 3.76 + 1.1 * `bty_avg` 
+and for female professors
+`score` = 3.95 + 0.031 * `bty_avg` 
+
+For two professors of different genders have the same beauty scores, the male counterpart will have the higher score.
+
+```{r fit}
+summary(m_int)
+summary(m_bty_gen)
+```
+The r-squared value for `m_int` is 0.0712 and `m_bty_gen` is 0.0591, so `m_int` is a better model for explaining the variation in `score`.
+
+### bty_avg x ranking interaction
+```{r interaction2}
+m_int_rank <- lm(score ~ bty_avg * rank, data = evals)
+tidy(m_int_rank)
+```
+
+The interaction equation would be
+`score` = 4.098 + (0.041 - (0.026 * `ranktenure_track`) + (0.065 * `ranktenured`)) * `bty_avg` - 0.018 * `ranktenure_track` - 0.409 * `ranktenured`
+or for tenure track professors
+`score` =
+for tenured professors
+`score` = 
+and for teaching professors
+`score` =
