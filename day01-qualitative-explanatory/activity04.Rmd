@@ -47,4 +47,20 @@ evals %>%
 ```
 The relationship between all of these variables appear to be positive. `bty_m1low` seems to have the weakest correlations with the 3 variables starting with `bty_f`. It does not make sense to include all of these beauty variables in our model.
 
+### MLR: One Quantitative predictor and One Qualitative Predictor
+```{r mlr-gender}
+m_bty_gen <- lm(score ~ bty_avg + gender, data = evals)
+tidy(m_bty_gen)
+```
+
+The predictor `bty_avg` is a significant in explaining the variance in score. The inclusion of the variable `gender` increase the parameter estimate for `bty_avg`.
+
+The formula for male professors is 3.747 + .074`bty_avg` + 0.172
+
+Therefore, if two professors have the same beauty rating, the male professor will have a score that is 0.172 higher than the female.
+
+```{r mlr-rank}
+m_bty_rank <- lm(score ~ bty_avg + rank, data = evals)
+tidy(m_bty_rank)
+```
 
